@@ -34,23 +34,19 @@ public class UserController extends Controller{
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("")
-    public ResponseEntity<User> getUserByEmail(@RequestParam("email") String email) {
-        User user = userService.getUserByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserById(@PathVariable("username") String username) {
+        User user = userService.getUserByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
-    @PostMapping(path = "createUser")
-    private void createUser(){
-
+    @GetMapping("{userId}/getPosts")
+    public ResponseEntity<User> getPostsByUserId(@RequestParam("userId") Long userId) {
+        User user = userService.getPostByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-    @GetMapping(path = "getUser")
-    private void getUser(){
-
-    }
-
 
 }

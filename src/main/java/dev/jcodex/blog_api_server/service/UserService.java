@@ -24,8 +24,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<Object> getPostByUserId(Long userId) {
+        return userRepository.findPostbyId(userId);
     }
 
     // Other methods omitted for brevity

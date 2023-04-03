@@ -20,15 +20,17 @@ public class PostController extends Controller{
         this.postService = postService;
     }
 
-    @PostMapping("")
-    public ResponseEntity<Post> createPost(@PathVariable("userId") Long userId, @Valid @RequestBody Post post) {
-        Post createdPost = postService.createPost(userId, post);
-        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+    @GetMapping("/{postId}")
+    public ResponseEntity<Post> getPostById(@PathVariable("postId") Long id) {
+        Post post = postService.getPostById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable("id") Long id) {
-        Post post = postService.getPostById(id)
+    @GetMapping("/{postId}/getContent")
+    public ResponseEntity<Post> getPostContentByPostId(@PathVariable("postId") Long id) {
+        Post post = postService.getPostContentById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
         return new ResponseEntity<>(post, HttpStatus.OK);
@@ -42,9 +44,10 @@ public class PostController extends Controller{
 //        return new ResponseEntity<>(posts, HttpStatus.OK);
 //    }
 
-    @PostMapping(path = "createPost")
-    private void createUser(){
-
+    @PostMapping("createPost/{userId}")
+    public ResponseEntity<Post> createPost(@PathVariable("userId") Long userId, @Valid @RequestBody Post post) {
+        Post createdPost = postService.createPost(userId, post);
+        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "getPost")

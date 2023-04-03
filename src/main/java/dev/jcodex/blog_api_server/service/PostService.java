@@ -32,6 +32,10 @@ public class PostService {
         return postRepository.findById(id);
     }
 
+    public Optional<Object> getPostContentById(Long id) {
+        return postRepository.findContentById(id);
+    }
+
 //    public Page<Post> getPostsByUserId(Long userId, int page, int size) {
 //        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
 //        return postRepository.findByUserId(userId, pageable);
